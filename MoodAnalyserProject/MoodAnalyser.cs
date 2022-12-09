@@ -29,7 +29,11 @@ namespace MoodAnalyserProject
         {
             try
             {
-                if (message.ToLower().Contains("sad"))  //TC 2.1, Given null should return "HAPPY".(try catch to handle exception).
+                if(message.Equals(string.Empty))    //will throw Custom exception if message is empty .
+                {
+                    throw new MoodAnalyserException("Message should not be empty", MoodAnalyserException.ExceptionTypes.EMPTY_MESSAGE);
+                }
+                else if (message.ToLower().Contains("sad"))   //null reference exception will occur while passing null.
                 {
                     return "SAD";
                 }
@@ -40,7 +44,8 @@ namespace MoodAnalyserProject
             }
             catch(NullReferenceException ex)
             {
-                return "Happy";
+                Console.WriteLine(ex.Message);
+                throw new MoodAnalyserException("Message should not be null",MoodAnalyserException.ExceptionTypes.NULL_MESSAGE);
             }
         }
     }

@@ -62,13 +62,47 @@ namespace MSTestingOnMoodAnalyser
         public void GivenNullMood_ViaConstructor_ReturnHappy(string message, string expected)
         {
             //Arrange
-            MoodAnalyser moodAnalyser = new MoodAnalyser(message);//message passed via constructor
+            MoodAnalyser moodAnalyser = new MoodAnalyser(message);
 
             //Act
             string actualOutput = moodAnalyser.AnalyseMood();
 
             //Assert
             Assert.AreEqual(actualOutput, expected);
+        }
+        [TestMethod]
+        [DataRow(null, "Message should not be null")] //TC 3.1 Given null should throw CustomMoodAnalysisException
+        public void GivenNull_ShouldThrow_CustomException_NullMsg(string message,string expected)
+        {
+            //Arrange
+            MoodAnalyser moodAnalyzer = new MoodAnalyser(message);
+            try
+            {
+                //Act
+                string actualOutput = moodAnalyzer.AnalyseMood();
+            }
+            catch(MoodAnalyserException ex)
+            {
+                //Assert
+                Assert.AreEqual(ex.Message,expected);
+            }
+        }
+        [TestMethod]
+        [DataRow("", "Message should not be empty")] //TC 3.2 Given empty should throw CustomMoodAnalysisException
+        public void GivenEmptyMessage_ShouldThrow_CustomException_EmptyMsg(string message, string expected)
+        {
+            //Arrange
+            MoodAnalyser moodAnalyzer = new MoodAnalyser(message);
+            try
+            {
+                //Act
+                string actualOutput = moodAnalyzer.AnalyseMood();
+            }
+            catch (MoodAnalyserException ex)
+            {
+                //Assert
+                Assert.AreEqual(ex.Message, expected);
+            }
         }
     }
 }
