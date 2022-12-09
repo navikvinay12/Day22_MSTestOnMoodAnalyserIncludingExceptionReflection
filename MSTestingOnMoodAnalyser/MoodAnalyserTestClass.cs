@@ -57,5 +57,18 @@ namespace MSTestingOnMoodAnalyser
             //Assert
             Assert.AreEqual(actualOutput, expected);
         }
+        [TestMethod]
+        [DataRow(null, "Happy")] //TC 2.1, Given null should return "HAPPY" .
+        public void GivenNullMood_ViaConstructor_ReturnHappy(string message, string expected)
+        {
+            //Arrange
+            MoodAnalyser moodAnalyser = new MoodAnalyser(message);//message passed via constructor
+
+            //Act
+            string actualOutput = moodAnalyser.AnalyseMood();
+
+            //Assert
+            Assert.AreEqual(actualOutput, expected);
+        }
     }
 }

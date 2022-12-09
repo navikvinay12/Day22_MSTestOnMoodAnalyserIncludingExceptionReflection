@@ -16,7 +16,7 @@ namespace MoodAnalyserProject
         }
         public string AnalyseMood(string message)
         {
-            if (message.ToLower().Contains("sad"))  //ToLower()Sad->sad.
+            if (message.ToLower().Contains("sad"))  
             {
                 return "SAD";
             }
@@ -25,15 +25,22 @@ namespace MoodAnalyserProject
                 return "HAPPY";
             }
         }
-        public string AnalyseMood()     //Refactor -Taking message via costructor not via parameterized method .
+        public string AnalyseMood()     
         {
-            if (message.ToLower().Contains("sad"))  
+            try
             {
-                return "SAD";
+                if (message.ToLower().Contains("sad"))  //TC 2.1, Given null should return "HAPPY".(try catch to handle exception).
+                {
+                    return "SAD";
+                }
+                else
+                {
+                    return "HAPPY";
+                }
             }
-            else
+            catch(NullReferenceException ex)
             {
-                return "HAPPY";
+                return "Happy";
             }
         }
     }
