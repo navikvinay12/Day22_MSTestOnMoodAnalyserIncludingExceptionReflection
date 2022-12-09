@@ -8,7 +8,9 @@ namespace MoodAnalyserProject
         public enum ExceptionTypes
         {
             NULL_MESSAGE,
-            EMPTY_MESSAGE
+            EMPTY_MESSAGE,
+            CLASS_NOT_FOUND,
+            CONSTRUCTOR_NOT_FOUND
         }
         public MoodAnalyserException(string msg, ExceptionTypes exceptionType) : base(msg)
         {
