@@ -34,5 +34,27 @@ namespace MoodAnalyserProject.Reflections
                 throw new MoodAnalyserException("no such method", MoodAnalyserException.ExceptionTypes.CONSTRUCTOR_NOT_FOUND);
             }
         }
+        //UC5 CreatingMoodAnalyserParameterizedObject() to get Object of MoodAnalyser class .
+        public object CreatingMoodAnalyserParameterizedObject(string className, string constructorName, string message)
+        {
+            Type type = typeof(MoodAnalyser);
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
+            {
+                if (type.Name.Equals(constructorName))
+                {
+                    ConstructorInfo constructorInfo = type.GetConstructor(new[] { typeof(string) });
+                    var obj = constructorInfo.Invoke(new object[] { message });
+                    return obj;
+                }
+                else
+                {
+                    throw new MoodAnalyserException("No Such Method", MoodAnalyserException.ExceptionTypes.CONSTRUCTOR_NOT_FOUND);
+                }
+            }
+            else
+            {
+                throw new MoodAnalyserException("No Such Class", MoodAnalyserException.ExceptionTypes.CLASS_NOT_FOUND);
+            }
+        }
     }
 }

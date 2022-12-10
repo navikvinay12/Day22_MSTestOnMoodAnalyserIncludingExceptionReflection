@@ -147,5 +147,47 @@ namespace MSTestingOnMoodAnalyser
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+        [TestMethod]
+        [TestCategory("Reflection-via Parameterized ")]
+        [DataRow("MoodAnalyserProject.MoodAnalyser", "MoodAnalyser", "I am in Happy Mood")] //TC 5.1 Given class MoodAnalyser should return MoodAnalyser_Object. 
+        public void Given_MoodAnalyserWithMessage_UsingReflection_ShouldReturn_ParameterizedObject(string className,string constructorName,string message)
+        {
+            //string message = "I am in Happy mood";
+            MoodAnalyser expectedObjOutput = new MoodAnalyser(message);
+            object actualObjOutput = moodAnalyserFactory.CreatingMoodAnalyserParameterizedObject(className, constructorName, message);
+            actualObjOutput.Equals(expectedObjOutput);  //comparing two objects ,if found Equal than test will be passed .
+        }
+        [TestMethod]
+        [TestCategory("Reflection-via Parameterized ")]
+        [DataRow("MoodAnalyserProject.FoodAnalyser", "FoodAnalyser", "No Such Class")] //TC 5.2 Given improper class Name should throw MoodAnalyserException. 
+        public void Given_WrongClassName_UsingReflection_ShouldThrow_CustomException(string className, string constructorName, string message)
+        {
+            //MoodAnalyser expectedObjOutput = new MoodAnalyser(message);
+            //string expected = "No Such Class";    //we actually,can use these for checking equality in order to pass test .
+            try
+            {
+                object actualOutput = moodAnalyserFactory.CreatingMoodAnalyserParameterizedObject(className, constructorName, message);
+            }
+            catch (MoodAnalyserException ex)
+            {
+                Assert.AreEqual(message, ex.Message);
+            }
+        }
+        [TestMethod]
+        [TestCategory("Reflection-via Parameterized ")]
+        [DataRow("MoodAnalyserProject.MoodAnalyser", "FoodAnalyser", "No Such Method")] //TC 5.3 Given proper class Name but wrong constructor name should throw MoodAnalyserException. 
+        public void Given_ProperClassName_ButWrong_ConstructorName_ShouldThrow_CustomException(string className, string constructorName, string message)
+        {
+            //MoodAnalyser expectedObjOutput = new MoodAnalyser(message);
+            //string expected = "No Such Method";   
+            try
+            {
+                object actualOutput = moodAnalyserFactory.CreatingMoodAnalyserParameterizedObject(className, constructorName, message);
+            }
+            catch (MoodAnalyserException ex)
+            {
+                Assert.AreEqual(message, ex.Message);
+            }
+        }
     }
 }
