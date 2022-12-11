@@ -14,10 +14,10 @@ namespace MSTestingOnMoodAnalyser
             MoodAnalyser moodAnalyser=new MoodAnalyser();
 
             //Act
-            string actualOutput=moodAnalyser.AnalyseMood(message);
+            //string actualOutput=moodAnalyser.AnalyseMood(message);
 
             //Assert
-            Assert.AreEqual(actualOutput, expected);
+            //Assert.AreEqual(actualOutput, expected);
         }
         [TestMethod]
         [DataRow("I am in Any Mood", "HAPPY")]     //TC 1.2    Given "I am in Any Mood" should return "HAPPY" .
@@ -27,10 +27,10 @@ namespace MSTestingOnMoodAnalyser
             MoodAnalyser moodAnalyser = new MoodAnalyser();
 
             //Act
-            string actualOutput = moodAnalyser.AnalyseMood(message);
+            //string actualOutput = moodAnalyser.AnalyseMood(message);
 
             //Assert
-            Assert.AreEqual(actualOutput, expected);
+            //Assert.AreEqual(actualOutput, expected);
         }
         [TestMethod]
         [DataRow("I am in Sad Mood", "SAD")] //After Refactor Repeating TC 1.1, Given "I am in Sad Mood" should return "SAD" .
@@ -187,6 +187,32 @@ namespace MSTestingOnMoodAnalyser
             catch (MoodAnalyserException ex)
             {
                 Assert.AreEqual(message, ex.Message);
+            }
+        }
+        [TestMethod]
+        [TestCategory("Reflection-Invoke Method")]
+        public void Given_ProperMethodName_UsingReflection_Should_CallAndExecute_GivenMethod() //TC6.1 Given Proper MethodName with Happy Message should Return HAPPY Mood.
+        {
+            string message = "I am in happy mood";
+            string methodName = "AnalyseMood";
+            string expected = "HAPPY";
+            string actual = moodAnalyserFactory.InvokeAnalyserMethod(message, methodName);
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        [TestCategory("Reflection-Invoke Method")]
+        public void Given_ImproperMethodName_UsingReflection_ShouldThrow_CustomException()  //TC 6.2 Given Improper MethodName should throw custom exception.
+        {
+            string message = "I am in happy mood";
+            string methodName = "AnalyseFood";      //-ve scenario ,passing wrong methodName.
+            string expectedMsg = "No Such Method";
+            try
+            {
+                string actual = moodAnalyserFactory.InvokeAnalyserMethod(message, methodName);
+            }
+            catch (MoodAnalyserException ex)
+            {
+                Assert.AreEqual(expectedMsg, ex.Message);
             }
         }
     }

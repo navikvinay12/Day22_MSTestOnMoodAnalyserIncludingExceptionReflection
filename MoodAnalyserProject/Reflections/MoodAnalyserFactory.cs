@@ -56,5 +56,21 @@ namespace MoodAnalyserProject.Reflections
                 throw new MoodAnalyserException("No Such Class", MoodAnalyserException.ExceptionTypes.CLASS_NOT_FOUND);
             }
         }
+        public string InvokeAnalyserMethod(string message,string methodName)
+        {
+            try  
+            {
+                Type type= typeof(MoodAnalyser);    //in order to fetch only the specific data from the overall data in an assembly
+                MoodAnalyserFactory factory=new MoodAnalyserFactory();
+                object moodAnalyserObject = factory.CreatingMoodAnalyserParameterizedObject("MoodAnalyserProject.MoodAnalyser","MoodAnalyser",message);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object info=methodInfo.Invoke(moodAnalyserObject,null);
+                return info.ToString();
+            }
+            catch(Exception)
+            {
+                throw new MoodAnalyserException("No Such Method", MoodAnalyserException.ExceptionTypes.NO_SUCH_METHOD);
+            }
+        }
     }
 }
